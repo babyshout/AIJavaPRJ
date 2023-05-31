@@ -44,6 +44,12 @@
             <artifactId>tess4j</artifactId>
             <version>5.2.1</version>
         </dependency>
+<!--        코모란 추가-->
+        <dependency>
+            <groupId>com.github.shin285</groupId>
+            <artifactId>KOMORAN</artifactId>
+            <version>3.3.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -78,6 +84,11 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
+        </repository>
+<!--        사설 리포 추가-->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
     <pluginRepositories>
