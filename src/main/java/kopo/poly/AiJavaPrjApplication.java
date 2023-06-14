@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -106,52 +107,170 @@ public class AiJavaPrjApplication implements CommandLineRunner {
         
         rList = studentService.insertStudent(pDTO);
         
-        rList.forEach(dto -> {
-            log.info("DB에 저장된 아이디 : " + dto.getUserId());
-            log.info("DB에 저장된 이름 : " + dto.getUserName());
-            log.info("DB에 저장된 이메일 : " + dto.getEmail());
-            log.info("DB에 저장된 주소 : " + dto.getAddr());
-        });
         
-//        List<StudentDTO> pList = new ArrayList<>();
+        loggingDatabase(rList);
         
-        for (int i = 0; i < 5; i++) {
-        StudentDTO myDTO = new StudentDTO();
+        //학생 수정하기
+        pDTO = new StudentDTO();
         
-        myDTO.setUserId(String.valueOf(i));
-        myDTO.setUserName(String.valueOf(i));
-        myDTO.setEmail(String.valueOf(i));
-        myDTO.setAddr(String.valueOf(i));
+        pDTO.setUserId("hglee67");
+        pDTO.setUserName("이협건_수정");
+        pDTO.setEmail("hglee67@kopo.ac.kr_수정");
+        pDTO.setAddr("서울_수정");
         
-//        pList.add(myDTO);
+        studentService.updateStudent(pDTO);
         
-        studentService.insertStudent(myDTO);
+        rList = studentService.getStudentList();
         
-        myDTO = null;
-        }
         
-//        studentService.
-        
-        rList.forEach(dto -> {
-            log.info("DB에 저장된 아이디 : " + dto.getUserId());
-            log.info("DB에 저장된 이름 : " + dto.getUserName());
-            log.info("DB에 저장된 이메일 : " + dto.getEmail());
-            log.info("DB에 저장된 주소 : " + dto.getAddr());
-        });
-        
-//        StudentDTO myPDTO = new StudentDTO();
-        
-        studentService.deleteStudent(pDTO);
+        loggingDatabase(rList);
         
         rList = studentService.getStudentList();
         
         rList.forEach(dto -> {
+            try {
+                studentService.deleteStudent(dto);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        
+        
+        rList = studentService.getStudentList();
+        
+        
+        loggingDatabase(rList);
+        
+        List<StudentDTO> pList = new ArrayList<>();
+        
+        for (int i = 0; i < 5; i++) {
+            StudentDTO myDTO = new StudentDTO();
+            
+            myDTO.setUserId(String.valueOf(i));
+            myDTO.setUserName(String.valueOf(i));
+            myDTO.setEmail(String.valueOf(i));
+            myDTO.setAddr(String.valueOf(i));
+            
+            pList.add(myDTO);
+
+//        studentService.insertStudent(myDTO);
+            
+            myDTO = null;
+        }
+        
+        
+        pList.parallelStream().forEach(dto -> {
+            try {
+                studentService.insertStudent(dto);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        
+        rList = studentService.getStudentList();
+        
+        loggingDatabase(rList);
+        
+        
+        rList = studentService.getStudentList();
+        
+        rList.forEach(dto -> {
+            try {
+                studentService.deleteStudent(dto);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        
+        
+        pList = new ArrayList<>();
+        
+        
+        for (int i = 0; i < 5; i++) {
+            StudentDTO myDTO = new StudentDTO();
+            
+            myDTO.setUserId(String.valueOf(i));
+            myDTO.setUserName(String.valueOf(i));
+            myDTO.setEmail(String.valueOf(i));
+            myDTO.setAddr(String.valueOf(i));
+            
+            pList.add(myDTO);
+
+//        studentService.insertStudent(myDTO);
+            
+            myDTO = null;
+        }
+        
+        rList = studentService.getStudentList();
+        loggingDatabase(rList);
+        
+        studentService.insertStudentList(pList);
+        rList = studentService.getStudentList();
+        loggingDatabase(rList);
+        
+        
+        studentService.updateStudentList(pList);
+        rList = studentService.getStudentList();
+        loggingDatabase(rList);
+        
+        
+        studentService.deleteStudentList(pList);
+        rList = studentService.getStudentList();
+        loggingDatabase(rList);
+
+
+//        List<StudentDTO> pList = new ArrayList<>();
+
+//        for (int i = 0; i < 5; i++) {
+//        StudentDTO myDTO = new StudentDTO();
+//
+//        myDTO.setUserId(String.valueOf(i));
+//        myDTO.setUserName(String.valueOf(i));
+//        myDTO.setEmail(String.valueOf(i));
+//        myDTO.setAddr(String.valueOf(i));
+//
+////        pList.add(myDTO);
+//
+//        studentService.insertStudent(myDTO);
+//
+//        myDTO = null;
+//        }
+//
+////        studentService.
+//
+//        rList.forEach(dto -> {
+//            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+//            log.info("DB에 저장된 이름 : " + dto.getUserName());
+//            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+//            log.info("DB에 저장된 주소 : " + dto.getAddr());
+//        });
+//
+////        StudentDTO myPDTO = new StudentDTO();
+//
+//        studentService.deleteStudent(pDTO);
+//
+//        rList = studentService.getStudentList();
+//
+//        rList.forEach(dto -> {
+//            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+//            log.info("DB에 저장된 이름 : " + dto.getUserName());
+//            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+//            log.info("DB에 저장된 주소 : " + dto.getAddr());
+//        });
+        
+        log.info("자바 프로그래밍 종료!!");
+    }
+    
+    static void loggingDatabase(List<StudentDTO> pList) {
+        pList.forEach(dto -> {
             log.info("DB에 저장된 아이디 : " + dto.getUserId());
             log.info("DB에 저장된 이름 : " + dto.getUserName());
             log.info("DB에 저장된 이메일 : " + dto.getEmail());
             log.info("DB에 저장된 주소 : " + dto.getAddr());
         });
-        
-        log.info("자바 프로그래밍 종료!!");
+    }
+    
+    static void deleteDatabase(List<StudentDTO> pList) {
+    
     }
 }

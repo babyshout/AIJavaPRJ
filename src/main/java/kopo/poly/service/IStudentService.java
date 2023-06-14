@@ -14,9 +14,17 @@ public interface IStudentService {
     */
     List<StudentDTO> insertStudent(StudentDTO pDTO) throws Exception;
     
+    void insertStudentList(List<StudentDTO> pList) throws Exception;
+    
     void deleteStudent(StudentDTO pDTO) throws Exception;
     
+    void deleteStudentList(List<StudentDTO> pList) throws Exception;
+    
     List<StudentDTO> getStudentList() throws Exception;
+    
+    void updateStudent(StudentDTO pDTO) throws Exception;
+    
+    void updateStudentList(List<StudentDTO> pList) throws Exception;
     
     
 }

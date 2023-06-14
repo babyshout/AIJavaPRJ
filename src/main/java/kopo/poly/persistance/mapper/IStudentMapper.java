@@ -35,5 +35,7 @@ public interface IStudentMapper {
     StudentDTO getStudent(StudentDTO pDTO) throws Exception;    //조회결과 1개
     
     void deleteStudent(StudentDTO pDTO) throws Exception;   //pk를 받아서 삭제
+    
+    void updateStudent(StudentDTO pDTO) throws Exception;
 
 }
